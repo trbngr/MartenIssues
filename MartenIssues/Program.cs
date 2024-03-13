@@ -16,7 +16,7 @@ app.MapGet("/", async (IDocumentStore store) =>
 {
     var doc = new MyMartenDocument("test");
     await store.BulkInsertAsync([doc], BulkInsertMode.OverwriteExisting);
-    return "ok";
+    return await store.QuerySession().Query<MyMartenDocument>().ToListAsync();
 });
 
 app.MapGet("/i", async (IDocumentSession store) =>
@@ -24,7 +24,7 @@ app.MapGet("/i", async (IDocumentSession store) =>
     var doc = new MyMartenDocument("test");
     store.Store(doc);
     await store.SaveChangesAsync();
-    return "ok";
+    return await store.Query<MyMartenDocument>().ToListAsync();
 });
 
 app.Run();
