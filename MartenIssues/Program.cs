@@ -19,4 +19,12 @@ app.MapGet("/", async (IDocumentStore store) =>
     return "ok";
 });
 
+app.MapGet("/i", async (IDocumentSession store) =>
+{
+    var doc = new MyMartenDocument("test");
+    store.Store(doc);
+    await store.SaveChangesAsync();
+    return "ok";
+});
+
 app.Run();
